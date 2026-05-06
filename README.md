@@ -241,20 +241,6 @@ Minimal manual configuration:
 
 For the full reference, see the [Configuration Guide](docs/configuration.md).
 
-**Using Azure OpenAI:**
-
-```jsonc
-{
-  "ai": {
-    "provider": "azure",
-    "model": "gpt-4o",                          // Azure deployment name
-    "api_key_env": "AZURE_OPENAI_API_KEY",
-    "azure_endpoint_env": "AZURE_OPENAI_ENDPOINT",
-    "api_version": "2024-10-21"
-  }
-}
-```
-
 ### 3. Run
 
 #### Local Installation

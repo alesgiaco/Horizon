@@ -1,11 +1,10 @@
 {
   "version": "1.0",
   "ai": {
-    "provider": "azure",
-    "model": "gpt-5.4-nano",
-    "api_key_env": "AZURE_OPENAI_API_KEY",
-    "azure_endpoint_env": "AZURE_OPENAI_ENDPOINT",
-    "api_version": "2025-04-01-preview",
+    "provider": "openai",
+    "model": "deepseek-v4-flash",
+    "base_url": "https://api.deepseek.com",
+    "api_key_env": "OPENAI_API_KEY",
     "temperature": 0.3,
     "max_tokens": 8192,
     "languages": [

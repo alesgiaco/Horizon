@@ -173,8 +173,9 @@ class AzureOpenAIClient(AIClient):
     api_version. The deployment path is assembled internally by the SDK.
     """
 
-    # Newer reasoning-series deployments (o1/o3/gpt-5.x) reject legacy
-    # `max_tokens` and require `max_completion_tokens` instead.
+    # Newer reasoning-series models reject legacy `max_tokens` and require
+    # `max_completion_tokens` instead. Azure uses deployment names as `model`,
+    # so a best-effort guess can be wrong for custom deployment aliases.
     _MODELS_REQUIRING_MAX_COMPLETION_TOKENS = ("o1", "o3", "o4", "gpt-5")
 
     def __init__(self, config: AIConfig):
@@ -230,13 +231,52 @@ class AzureOpenAIClient(AIClient):
         temperature = self.temperature if temperature is None else temperature
         max_tokens = self.max_tokens if max_tokens is None else max_tokens
 
+        try:
+            response = await self._create_completion(
+                system=system,
+                user=user,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                use_max_completion_tokens=self._use_max_completion_tokens,
+            )
+        except Exception as exc:
+            fallback = self._token_fallback_mode(str(exc))
+            if fallback is None:
+                raise
+
+            self._use_max_completion_tokens = fallback
+            response = await self._create_completion(
+                system=system,
+                user=user,
+                temperature=temperature,
+                max_tokens=max_tokens,
+                use_max_completion_tokens=fallback,
+            )
+
+        usage = getattr(response, "usage", None)
+        if usage is not None:
+            record_usage(
+                "openai",
+                input_tokens=getattr(usage, "prompt_tokens", 0),
+                output_tokens=getattr(usage, "completion_tokens", 0),
+            )
+        return response.choices[0].message.content
+
+    async def _create_completion(
+        self,
+        *,
+        system: str,
+        user: str,
+        temperature: float,
+        max_tokens: int,
+        use_max_completion_tokens: bool,
+    ):
         tokens_kwarg = (
             {"max_completion_tokens": max_tokens}
-            if self._use_max_completion_tokens
+            if use_max_completion_tokens
             else {"max_tokens": max_tokens}
         )
-
-        response = await self.client.chat.completions.create(
+        return await self.client.chat.completions.create(
             model=self.model,
             messages=[
                 {"role": "system", "content": system},
@@ -246,14 +286,15 @@ class AzureOpenAIClient(AIClient):
             response_format={"type": "json_object"},
             **tokens_kwarg,
         )
-        usage = getattr(response, "usage", None)
-        if usage is not None:
-            record_usage(
-                "openai",
-                input_tokens=getattr(usage, "prompt_tokens", 0),
-                output_tokens=getattr(usage, "completion_tokens", 0),
-            )
-        return response.choices[0].message.content
+
+    @staticmethod
+    def _token_fallback_mode(message: str) -> Optional[bool]:
+        lowered = message.lower()
+        if "max_completion_tokens" in lowered and "max_tokens" in lowered:
+            return True
+        if "max_tokens" in lowered and "max_completion_tokens" not in lowered:
+            return False
+        return None
 
 
 class MiniMaxClient(AIClient):

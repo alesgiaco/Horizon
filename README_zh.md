@@ -242,20 +242,6 @@ cp data/config.example.json data/config.json  # 自定义信息源
 
 完整配置参考请查看[配置指南](docs/configuration.md)。
 
-**使用 Azure OpenAI：**
-
-```jsonc
-{
-  "ai": {
-    "provider": "azure",
-    "model": "gpt-4o",                          // Azure deployment 名称
-    "api_key_env": "AZURE_OPENAI_API_KEY",
-    "azure_endpoint_env": "AZURE_OPENAI_ENDPOINT",
-    "api_version": "2024-10-21"
-  }
-}
-```
-
 ### 3. 运行
 
 #### 本地安装
