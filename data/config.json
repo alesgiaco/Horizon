@@ -30,12 +30,8 @@
       ],
       "fetch_comments": 5
     },
-    "github": {
-      "enabled": false
-    },
-    "telegram": {
-      "enabled": false
-    }
+    "github": [],
+    "telegram": []
   },
   "filtering": {
     "ai_score_threshold": 7.0,
