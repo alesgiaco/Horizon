@@ -29,9 +29,7 @@
         { "subreddit": "ClaudeAI", "sort": "hot", "limit": 10 }
       ],
       "fetch_comments": 5
-    },
-    "github": [],
-    "telegram": []
+    }
   },
   "filtering": {
     "ai_score_threshold": 7.0,
