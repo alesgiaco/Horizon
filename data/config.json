@@ -12,40 +12,18 @@
       "min_score": 150
     },
     "rss": [
-      { "name": "Anthropic News", "url": "https://www.anthropic.com/news/rss.xml" },
+      { "name": "Anthropic News", "url": "https://raw.githubusercontent.com/taobojlen/anthropic-rss-feed/main/anthropic_news_rss.xml" },
       { "name": "OpenAI Blog", "url": "https://openai.com/blog/rss.xml" },
       { "name": "Google DeepMind", "url": "https://deepmind.google/blog/rss.xml" },
-      { "name": "Mistral AI", "url": "https://mistral.ai/news/rss.xml" },
-      { "name": "Meta AI", "url": "https://ai.meta.com/blog/rss/" },
-      { "name": "xAI", "url": "https://x.ai/blog/rss.xml" },
-      { "name": "Cohere", "url": "https://cohere.com/blog/rss.xml" },
-      { "name": "Stability AI", "url": "https://stability.ai/news?format=rss" },
-      { "name": "Together AI", "url": "https://www.together.ai/blog/rss.xml" },
       { "name": "Hugging Face Blog", "url": "https://huggingface.co/blog/feed.xml" },
       { "name": "HF Daily Papers", "url": "https://raw.githubusercontent.com/huangboming/huggingface-daily-paper-feed/refs/heads/main/feed.xml" },
-      { "name": "arXiv cs.AI", "url": "https://rss.arxiv.org/rss/cs.AI" },
+      { "name": "Together AI", "url": "https://www.together.ai/blog/rss.xml" },
       { "name": "Simon Willison", "url": "https://simonwillison.net/atom/everything/" },
-      { "name": "Import AI", "url": "https://importai.substack.com/feed" },
-      { "name": "The Batch", "url": "https://www.deeplearning.ai/the-batch/feed/" },
-      { "name": "Latent Space", "url": "https://www.latent.space/feed" },
-      { "name": "Smol AI News", "url": "https://buttondown.com/ainews/rss" },
-      { "name": "The Rundown AI", "url": "https://www.therundown.ai/feed" },
-      { "name": "Last Week in AI", "url": "https://lastweekin.ai/feed" },
-      { "name": "Interconnects", "url": "https://www.interconnects.ai/feed" }
-    ],
-    "reddit": {
-      "subreddits": [
-        { "subreddit": "LocalLLaMA", "sort": "hot", "limit": 15 },
-        { "subreddit": "MachineLearning", "sort": "hot", "limit": 10 },
-        { "subreddit": "singularity", "sort": "hot", "limit": 10 },
-        { "subreddit": "ClaudeAI", "sort": "hot", "limit": 10 },
-        { "subreddit": "OpenAI", "sort": "hot", "limit": 10 }
-      ],
-      "fetch_comments": 5
-    }
+      { "name": "Latent Space", "url": "https://www.latent.space/feed" }
+    ]
   },
   "filtering": {
-    "ai_score_threshold": 7.5,
+    "ai_score_threshold": 6.5,
     "time_window_hours": 24
   }
 }
